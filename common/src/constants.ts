@@ -16,8 +16,8 @@ export const GameConstants = {
     defaultMode: "normal" satisfies ModeName as ModeName,
     player: {
         radius: 2.25,
-        baseSpeed: 0.03,
-        defaultHealth: 100,
+        baseSpeed: 0.06,
+        defaultHealth: 200,
         maxAdrenaline: 100,
         maxShield: 100,
         maxInfection: 100,
