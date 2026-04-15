@@ -3,7 +3,7 @@
 <!-- @tier: 1 -->
 <!-- @see-also: docs/subsystems/objects/, docs/subsystems/packets/, docs/subsystems/game-loop/ -->
 <!-- @source: common/src/, server/src/, client/src/ -->
-<!-- @updated: 2026-03-04 -->
+<!-- @updated: 2026-04-09 -->
 
 ## Overview
 
@@ -38,7 +38,8 @@ suroi/
 │           ├── hitbox.ts           # Hitbox types (circle, rect, polygon, group)
 │           ├── math.ts             # Angle, Geometry, Collision, etc.
 │           ├── vector.ts           # Vec, Vector
-│           └── terrain.ts          # Terrain, River, FloorTypes
+│           ├── terrain.ts          # Terrain, River, FloorTypes
+│           └── modeFromMap.ts     # resolveModeFromMapString (map string → ModeName)
 │
 ├── server/          # Game server (Bun runtime)
 │   └── src/
@@ -69,11 +70,12 @@ suroi/
 │   ├── vite/                       # Vite config + custom plugins
 │   └── public/img/                 # Game sprites, organized by map variant
 │
-└── tests/           # Validators and stress tests
+└── tests/           # Validators, stress tests, and some legacy Jest tests
     └── src/
         ├── validateDefinitions.ts  # Validates all definition objects
         ├── validateSvgs.ts         # Validates SVG assets
-        └── stressTest.ts           # Performance stress test
+        ├── stressTest.ts           # Performance stress test
+        └── *.test.ts               # e.g. math; see also common/src/utils/*.test.ts for `bun test`
 ```
 
 Path alias: `@common/*` maps to `../common/src/*` in both `client` and `server`.

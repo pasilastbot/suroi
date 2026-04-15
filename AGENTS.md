@@ -1031,6 +1031,7 @@ for development, testing, and validation tasks.
 | `bun lint:check` | Lint check only (no fix) | CI validation |
 | `bun validateDefinitions` | Validate game definitions | After modifying definitions |
 | `bun validateSvgs` | Validate SVG assets | After adding/modifying SVGs |
+| `bun test` | Run workspace tests (e.g. `modeFromMap`, math) | After logic changes in `common`/shared code |
 | `bun watch:server` | TypeScript type checking in watch mode | During development |
 
 ### Development Workflow

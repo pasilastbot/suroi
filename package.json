@@ -15,6 +15,7 @@
     "lint:check": "bunx --bun biome lint",
     "validateDefinitions": "cd tests && bun validateDefinitions",
     "validateSvgs": "cd tests && bun validateSvgs",
+    "test": "bun test",
     "fullReinstall": "rm -r bun.lock node_modules server/node_modules && bun install",
     "fullReinstallWin": "del /f /s /q bun.lock node_modules\\* server\\node_modules\\* & bun install"
   },

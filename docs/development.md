@@ -2,8 +2,8 @@
 
 <!-- @tier: 1 -->
 <!-- @see-also: docs/architecture.md, docs/description.md -->
-<!-- @source: package.json, biome.json, server/config.example.json -->
-<!-- @updated: 2026-03-04 -->
+<!-- @source: package.json, biome.json, server/config.example.json, common/src/constants.ts -->
+<!-- @updated: 2026-04-09 -->
 
 ## Overview
 
@@ -37,6 +37,8 @@ cp server/config.example.json server/config.json
 ```
 
 The server will not start without `server/config.json`.
+
+**Defaults (repo example):** [`server/config.example.json`](../server/config.example.json) uses **`"map": "winter"`**, and [`GameConstants.defaultMode`](../common/src/constants.ts) is **`"winter"`** so the client menu fallback matches the local server’s reported mode when region info has no explicit `mode`. To run the grass/desert layout instead, set `map` to `"normal"` (and optionally align `defaultMode` if you rely on offline menu theming). Feature notes: [`specs/features/winter-default-theme.md`](../specs/features/winter-default-theme.md).
 
 ## Development Commands
 
@@ -88,6 +90,15 @@ bun validateSvgs
 ```
 
 Run `bun validateDefinitions` any time you add or modify definitions in `common/src/definitions/`.
+
+### Tests
+
+```bash
+# Shared unit tests (e.g. map mode resolution, legacy math tests)
+bun test
+```
+
+Add or extend cases under `common/src/utils/*.test.ts` (and existing `tests/src/`) when changing cross-cutting helpers in `common/`.
 
 ### Type Checking
 
@@ -215,7 +226,7 @@ Where to put new code:
     → server/src/data/maps.ts  +  client/public/img/game/<variant>/
 
   New plugin?
-    → server/src/plugins/<name>.ts  +  register in server/src/server.ts
+    → server/src/plugins/<name>.ts  +  add the module name (no `.ts`) to `plugins` in server/config.json (`Game` loads them via `pluginManager.loadPlugins()`)
 ```
 
 ## Testing
