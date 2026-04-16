@@ -3,8 +3,6 @@
 > This file configures AI agent behavior across three domains:
 > **Documentation**, **Spec-Driven Development**, and **Skills & Tools**.
 > Each section is independent but they reference each other where needed.
->
-> **See also:** [CLAUDE.md](CLAUDE.md) — Project overview, build commands, architecture, and code conventions
 
 ---
 
@@ -52,28 +50,24 @@ read this first to understand the documentation landscape.
 # Documentation Content Plan
 
 ## Overview
-Suroi is an open-source 2D battle royale game inspired by surviv.io. It's a multiplayer
-browser game with a client-server architecture using WebSockets and binary protocol serialization.
+Suroi is an open-source browser-based 2D battle royale IO game (suroi.io) built with Bun, TypeScript, PixiJS, and Svelte. Players scavenge weapons, avoid the shrinking gas zone, and fight to be the last survivor.
 
 ## Documentation Index
 
 | # | Module / Area | Tier | Status | Path | Priority | Last Updated |
 |---|---------------|------|--------|------|----------|--------------|
 | 1 | Architecture Overview | T1 | Not Started | docs/architecture.md | Critical | — |
-| 2 | Game Data Model | T1 | Not Started | docs/datamodel.md | Critical | — |
+| 2 | Data Model | T1 | Not Started | docs/datamodel.md | Critical | — |
 | 3 | Development Guide | T1 | Not Started | docs/development.md | Critical | — |
-| 4 | Protocol Reference | T1 | Not Started | docs/protocol.md | Critical | — |
-| 5 | Definitions Subsystem | T2 | Not Started | docs/subsystems/definitions/ | Critical | — |
-| 6 | Packets Subsystem | T2 | Not Started | docs/subsystems/packets/ | Critical | — |
-| 7 | Object Model Subsystem | T2 | Not Started | docs/subsystems/objects/ | Critical | — |
-| 8 | Game Loop Subsystem | T2 | Not Started | docs/subsystems/game-loop/ | High | — |
-| 9 | Inventory Subsystem | T2 | Not Started | docs/subsystems/inventory/ | High | — |
-| 10 | Map Generation Subsystem | T2 | Not Started | docs/subsystems/map/ | High | — |
-| 11 | Rendering Subsystem | T2 | Not Started | docs/subsystems/rendering/ | High | — |
-| 12 | Input & Controls Subsystem | T2 | Not Started | docs/subsystems/input/ | Medium | — |
-| 13 | Gas System Subsystem | T2 | Not Started | docs/subsystems/gas/ | Medium | — |
-| 14 | Plugin System Subsystem | T2 | Not Started | docs/subsystems/plugins/ | Medium | — |
-| 15 | UI & Translations Subsystem | T2 | Not Started | docs/subsystems/ui/ | Medium | — |
+| 4 | Game Loop Subsystem | T2 | Not Started | docs/subsystems/game-loop/ | Critical | — |
+| 5 | Game Loop — Tick Module | T3 | Not Started | docs/subsystems/game-loop/modules/tick.md | High | — |
+| 6 | Networking Subsystem | T2 | Not Started | docs/subsystems/networking/ | Critical | — |
+| 7 | Object Definitions Subsystem | T2 | Not Started | docs/subsystems/object-definitions/ | Critical | — |
+| 8 | Map Generation Subsystem | T2 | Not Started | docs/subsystems/map/ | High | — |
+| 9 | Gas System Subsystem | T2 | Not Started | docs/subsystems/gas/ | High | — |
+| 10 | Client Rendering Subsystem | T2 | Not Started | docs/subsystems/client-rendering/ | High | — |
+| 11 | Inventory Subsystem | T2 | Not Started | docs/subsystems/inventory/ | Medium | — |
+| 12 | Plugin System Subsystem | T2 | Not Started | docs/subsystems/plugins/ | Medium | — |
 
 ## Status Legend
 - **Done** — Written, reviewed, up-to-date with current code
@@ -83,11 +77,10 @@ browser game with a client-server architecture using WebSockets and binary proto
 
 ## Generation Order
 Generate documentation in dependency order:
-1. **Tier 1 first** — Architecture, data model, development guide, protocol reference
-2. **Core Tier 2 next** — Definitions, Packets, Object Model (everything depends on these)
-3. **Server Tier 2** — Game Loop, Inventory, Map Generation, Gas, Plugins
-4. **Client Tier 2** — Rendering, Input, UI & Translations
-5. **Tier 3 last** — Module docs within each subsystem (ordered by complexity)
+1. **Tier 1 first** — Architecture, data model, development guide (everything depends on these)
+2. **Core Tier 2 next** — Subsystems that other subsystems depend on (object definitions in `common/`, networking packets, spatial grid)
+3. **Feature Tier 2** — Business logic subsystems (ordered by developer priority: game loop, map, gas, inventory, client rendering)
+4. **Tier 3 last** — Module docs within each subsystem (ordered by complexity)
 
 ## What Each Document Must Include
 - Purpose and scope
@@ -95,7 +88,6 @@ Generate documentation in dependency order:
 - Data flow (how data moves through the module)
 - Dependencies on other modules (with links to their Tier 2/3 docs)
 - Cross-tier references ("See also" links up and down the tiers)
-- Protocol version implications (when changes require `GameConstants.protocolVersion` bump)
 - Known issues, tech debt, or gotchas
 ```
 
@@ -113,21 +105,21 @@ system**, not individual subsystems.
 
 | # | Document | Path | Covers |
 |---|----------|------|--------|
-| 1 | Project Description | `docs/description.md` | Purpose, gameplay, target audience, key features |
-| 2 | System Architecture | `docs/architecture.md` | Monorepo structure, client-server model, WebSocket protocol, tech stack |
-| 3 | Game Data Model | `docs/datamodel.md` | Object categories, definition types, inventory structure, game state |
-| 4 | Development Guide | `docs/development.md` | Setup, commands, code standards, Biome rules, testing, local dev |
-| 5 | Protocol Reference | `docs/protocol.md` | Binary packet format, `SuroiByteStream`, packet types, version management |
+| 1 | Project Description | `docs/description.md` | Purpose, target users, key features, business domain |
+| 2 | System Architecture | `docs/architecture.md` | Tech stack, folder structure, component map, deployment |
+| 3 | Data Model | `docs/datamodel.md` | Core entities, schema overview, relationships |
+| 4 | Development Guide | `docs/development.md` | Setup, commands, code standards, testing, local dev |
+| 5 | API Reference | `docs/api-reference.md` | Binary WebSocket packet protocol, message types, serialization formats |
 
 ### Optional Documents (add as project grows)
 
 | # | Document | Path | Covers |
 |---|----------|------|--------|
-| 6 | Deployment | `docs/deployment.md` | Environments, CI/CD, infrastructure, cluster configuration |
-| 7 | Asset Pipeline | `docs/assets.md` | Spritesheets, audio spritesheets, image naming conventions, map variants |
-| 8 | Terminology | `docs/terminology.md` | Game-specific terms (loot, obstacles, gas, TPS, etc.) |
-| 9 | Adding Content | `docs/adding-content.md` | How to add new guns, obstacles, buildings, game modes |
-| 10 | Multiplayer Architecture | `docs/multiplayer.md` | WebSocket handling, game manager, cluster mode, player connections |
+| 6 | Security | `docs/security.md` | Auth flow, authorization, data protection |
+| 7 | Deployment | `docs/deployment.md` | Environments, CI/CD, infrastructure |
+| 8 | Integration Guide | `docs/integration.md` | External services, third-party APIs |
+| 9 | Features & Use Cases | `docs/features.md` | Feature inventory, use case documentation |
+| 10 | Terminology | `docs/terminology.md` | Domain-specific terms and definitions |
 
 ### Tier 1 Document Template
 
@@ -141,15 +133,16 @@ system**, not individual subsystems.
 [What this document covers and why it matters]
 
 ## [Main Content]
-[Architecture diagrams, data model, protocol overview, etc.]
+[Architecture diagrams, data model, API overview, etc.]
 
 ## Subsystem References
 Navigate to Tier 2 for subsystem details:
-- [Definitions](docs/subsystems/definitions/) — Game object definitions (guns, obstacles, etc.)
-- [Packets](docs/subsystems/packets/) — Binary protocol and serialization
-- [Objects](docs/subsystems/objects/) — Shared object model and inheritance
-- [Game Loop](docs/subsystems/game-loop/) — Server tick loop and game state
-- [Rendering](docs/subsystems/rendering/) — PixiJS client rendering
+- [Game Loop](docs/subsystems/game-loop/) — [1-line description]
+- [Networking](docs/subsystems/networking/) — [1-line description]
+- [Object Definitions](docs/subsystems/object-definitions/) — [1-line description]
+- [Map Generation](docs/subsystems/map/) — [1-line description]
+- [Gas System](docs/subsystems/gas/) — [1-line description]
+- [Client Rendering](docs/subsystems/client-rendering/) — [1-line description]
 
 ## Related Documents
 - **Tier 1:** [links to other Tier 1 docs]
@@ -187,7 +180,7 @@ docs/subsystems/<subsystem-name>/
 <!-- @tier: 2 -->
 <!-- @parent: docs/architecture.md -->
 <!-- @modules: docs/subsystems/[name]/modules/ -->
-<!-- @source: common/src/[path]/ or server/src/[path]/ or client/src/scripts/[path]/ -->
+<!-- @source: src/[subsystem-path]/ -->
 
 ## Purpose
 [What this subsystem does — 1-2 sentences]
@@ -195,27 +188,26 @@ docs/subsystems/<subsystem-name>/
 ## Key Files & Entry Points
 | File | Purpose |
 |------|---------|
-| `common/src/[path]/file.ts` | Shared code (definitions, utilities) |
-| `server/src/[path]/file.ts` | Server-side implementation |
-| `client/src/scripts/[path]/file.ts` | Client-side implementation |
+| `server/src/[path].ts` | Main entry point / game logic |
+| `common/src/packets/[path].ts` | Packet definitions and serialization |
+| `client/src/scripts/[path].ts` | Client-side rendering / UI |
 
 ## Architecture
-[How this subsystem is structured internally — diagram if helpful]
+[How this subsystem is structured internally]
 
 ## Data Flow
 ```
-Client Input → InputPacket → Server Game.tick() → UpdatePacket → Client Render
+Input → [Step 1] → [Step 2] → [Step 3] → Output
 ```
 [Describe how data moves through the subsystem]
 
-## Protocol Considerations
-- **Affects protocol:** [Yes/No — does changing this require bumping `GameConstants.protocolVersion`?]
-- **Serialization:** [How data is serialized via `SuroiByteStream`]
+## Interfaces & Contracts
+[Public APIs, exported functions, event contracts]
 
 ## Dependencies
 - **Depends on:** [List other subsystems this one calls]
-  - [Definitions](../definitions/) — for object definitions
-  - [Packets](../packets/) — for network serialization
+  - [Subsystem X](../subsystem-x/) — for object definitions (`common/src/definitions/`)
+  - [Subsystem Y](../subsystem-y/) — for spatial grid (`server/src/utils/grid.ts`)
 - **Depended on by:** [List subsystems that call this one]
 
 ## Module Index (Tier 3)
@@ -265,7 +257,7 @@ They are the bridge between documentation and source code.
 
 <!-- @tier: 3 -->
 <!-- @parent: docs/subsystems/[name]/README.md -->
-<!-- @source: common/src/[path]/ or server/src/[path]/ or client/src/scripts/[path]/ -->
+<!-- @source: src/[subsystem]/[module]/ -->
 
 ## Purpose
 [What this module does — 1 sentence]
@@ -273,18 +265,18 @@ They are the bridge between documentation and source code.
 ## Key Files
 | File | Purpose | Complexity |
 |------|---------|------------|
-| `common/src/[path]/file.ts` | Shared logic | Medium |
-| `server/src/[path]/file.ts` | Server implementation | High |
-| `client/src/scripts/[path]/file.ts` | Client implementation | Medium |
+| `server/src/[path].ts` | Game object / logic | High |
+| `common/src/utils/[path].ts` | Shared math / hitbox / serialization | Medium |
+| `client/src/scripts/[path].ts` | Client rendering / UI | Medium |
 
-## Game Rules
-- [Rule 1: describe the game logic this module enforces]
-- [Rule 2: balance constants or configuration]
+## Business Rules
+- [Rule 1: describe the business logic this module enforces]
+- [Rule 2: configuration or settings that affect behavior]
 
 ## Data Lineage
 [How data flows through this module — map inputs to outputs]
 ```
-Player action → InputPacket → Server validation → Game state update → UpdatePacket → Client render
+API field → validation → transformation → database column
 ```
 
 ## Dependencies
@@ -294,15 +286,15 @@ Player action → InputPacket → Server validation → Game state update → Up
 ## Complex Functions
 Document functions where behavior isn't obvious from reading the code:
 
-### `functionName(params)` — @file common/src/[path]/file.ts:42
+### `functionName(params)` — @file src/[path]/file.ts:42
 **Purpose:** [What it does]
 **Implicit behavior:** [Side effects, assumptions, gotchas]
 **Called by:** [What invokes this function]
 
 ## Configuration
-| Constant | Location | Effect | Value |
-|----------|----------|--------|-------|
-| `GameConstants.X` | `common/src/constants.ts` | [Effect] | [Value] |
+| Setting | Effect | Default |
+|---------|--------|---------|
+| `FEATURE_FLAG_X` | Enables [behavior] | `false` |
 
 ## Related Documents
 - **Tier 2:** [../README.md](../README.md) — Subsystem overview
@@ -322,13 +314,13 @@ Always use both together when planning or implementing.
 Navigate from system overview down to specific code:
 
 ```
-Tier 1: docs/architecture.md                    → System overview (monorepo, client-server)
+Tier 1: docs/architecture.md                    → System overview
   ↓
-Tier 2: docs/subsystems/<name>/README.md         → Subsystem details (definitions, packets, etc.)
+Tier 2: docs/subsystems/<name>/README.md         → Subsystem details
   ↓
-Tier 3: docs/subsystems/<name>/modules/<mod>.md  → Module specifics (guns, obstacles, etc.)
+Tier 3: docs/subsystems/<name>/modules/<mod>.md  → Module specifics
   ↓
-Code:   common/src/, server/src/, client/src/    → Source files across packages
+Code:   src/<subsystem>/<module>/                → Source files
 ```
 
 **Use when:** Understanding structure, planning architectural changes, onboarding.
@@ -346,94 +338,19 @@ docs/subsystems/<affected>/README.md     → Understand affected subsystems
   ↓
 docs/subsystems/<affected>/modules/*.md  → Module implementation details
   ↓
-common/ → server/ → client/              → Trace through all three packages
+src/                                     → Source code
 ```
 
 **Use when:** Implementing features, fixing bugs, tracing end-to-end flows.
 
-### Strategy 3: Package-Wise (Monorepo Navigation)
-
-Navigate by package responsibility:
-
-```
-common/src/definitions/     → What game objects exist (guns, obstacles, etc.)
-common/src/packets/         → How client-server communicate
-common/src/utils/           → Shared utilities (math, hitbox, streams)
-  ↓
-server/src/                 → Server-side game logic (40 TPS loop)
-server/src/objects/         → Server object implementations
-server/src/inventory/       → Inventory and item handling
-  ↓
-client/src/scripts/         → Client-side rendering and input
-client/src/scripts/objects/ → Client object implementations (PixiJS)
-client/src/scripts/managers/→ Game managers (camera, sound, particles)
-```
-
-**Use when:** Understanding package boundaries, debugging client-server sync issues.
-
 ### Navigation Rules
 
 1. **Start with content-plan.md** — understand what's documented, what's missing
-2. **Use all three strategies** — architecture + feature + package context
+2. **Use both strategies together** — feature context + architecture context
 3. **Follow cross-tier references** — every doc links up and down the tiers
 4. **Follow @file references** — docs link to specific source files
-5. **Trace across packages** — most features touch common/, server/, and client/
-6. **Update docs when code changes** — documentation is a living artifact
-7. **Only work within documented subsystems** — if a subsystem isn't documented, list it but do not explore further
-
----
-
-## Suroi Subsystems Inventory
-
-This section lists all subsystems in the Suroi codebase with their locations and purposes.
-Use this as a reference when planning documentation or implementing features.
-
-### Core Subsystems (Critical Priority)
-
-| Subsystem | Package | Location | Purpose |
-|-----------|---------|----------|---------|
-| **Definitions** | common | `common/src/definitions/` | All game object definitions (guns, melees, obstacles, buildings, etc.) |
-| **Packets** | common | `common/src/packets/` | Binary protocol packets for client-server communication |
-| **Object Model** | common/server/client | `*/utils/gameObject.ts`, `*/objects/` | Shared object hierarchy with `BaseGameObject.derive()` pattern |
-| **Constants** | common | `common/src/constants.ts` | `GameConstants`, `ObjectCategory`, `Layer`, protocol version |
-
-### Server Subsystems (High Priority)
-
-| Subsystem | Package | Location | Purpose |
-|-----------|---------|----------|---------|
-| **Game Loop** | server | `server/src/game.ts` | Main 40 TPS game tick loop |
-| **Game Manager** | server | `server/src/gameManager.ts` | Multi-game management, Node cluster |
-| **Map Generation** | server | `server/src/map.ts`, `server/src/data/maps.ts` | Procedural map generation |
-| **Gas System** | server | `server/src/gas.ts`, `server/src/data/gasStages.ts` | Battle royale gas mechanics |
-| **Inventory** | server | `server/src/inventory/` | Player inventory, weapons, items |
-| **Plugin System** | server | `server/src/plugins/` | Event-based plugin architecture |
-| **Server Objects** | server | `server/src/objects/` | Server-side object implementations |
-
-### Client Subsystems (High Priority)
-
-| Subsystem | Package | Location | Purpose |
-|-----------|---------|----------|---------|
-| **Rendering** | client | `client/src/scripts/objects/` | PixiJS v8 game object rendering |
-| **Managers** | client | `client/src/scripts/managers/` | Camera, sound, particles, input, UI |
-| **Game Console** | client | `client/src/scripts/console/` | Debug console and commands |
-| **Translations** | client | `client/src/translations/`, `client/src/scripts/utils/translations/` | i18n system |
-
-### Shared Utilities (Medium Priority)
-
-| Subsystem | Package | Location | Purpose |
-|-----------|---------|----------|---------|
-| **Byte Streams** | common | `common/src/utils/byteStream.ts`, `suroiByteStream.ts` | Binary serialization |
-| **Math Utils** | common | `common/src/utils/math.ts`, `vector.ts` | Geometry, angles, collisions |
-| **Hitboxes** | common | `common/src/utils/hitbox.ts` | Circle, rectangle, polygon, group hitboxes |
-| **Terrain** | common | `common/src/utils/terrain.ts` | Terrain types, rivers, floor types |
-
-### Test & Validation (Medium Priority)
-
-| Subsystem | Package | Location | Purpose |
-|-----------|---------|----------|---------|
-| **Definition Validation** | tests | `tests/src/validateDefinitions.ts` | Validate game definitions |
-| **SVG Validation** | tests | `tests/src/validateSvgs.ts` | Validate SVG assets |
-| **Stress Tests** | tests | `tests/src/stressTest.ts` | Performance stress testing |
+5. **Update docs when code changes** — documentation is a living artifact
+6. **Only work within documented subsystems** — if a subsystem isn't documented, list it but do not explore further
 
 ---
 
@@ -541,9 +458,7 @@ also be used standalone.
 ## Overview
 - **Status:** Draft | Review | Approved | In Progress | Done
 - **Created:** [Date]
-- **Affected Packages:** [common | server | client — list all affected]
 - **Affected Subsystems:** [List — with links to Tier 2 docs]
-- **Protocol Change:** [Yes/No — requires `GameConstants.protocolVersion` bump?]
 
 ## Problem Statement
 [What problem does this solve? Why is it needed?]
@@ -557,8 +472,8 @@ also be used standalone.
 ## Acceptance Criteria
 
 ### AC1: [Descriptive name]
-**Given** [precondition — game state before]
-**When** [action — what the player/system does]
+**Given** [precondition — system state before]
+**When** [action — what the user/system does]
 **Then** [expected result — observable outcome]
 
 ### AC2: [Descriptive name]
@@ -568,31 +483,16 @@ also be used standalone.
 
 ## Files to Modify
 
-| Package | File | Change Description |
-|---------|------|--------------------|
-| common | `common/src/definitions/[file].ts` | [Add/modify definition] |
-| common | `common/src/packets/[file].ts` | [Add/modify packet] |
-| server | `server/src/objects/[file].ts` | [Server-side logic] |
-| client | `client/src/scripts/objects/[file].ts` | [Client-side rendering] |
-
-## Protocol Considerations
-- **New packets:** [List any new packet types]
-- **Modified packets:** [List packets with changed format]
-- **Serialization changes:** [Changes to `SuroiByteStream` usage]
-- **Backward compatibility:** [Can old clients/servers still connect?]
+| File | Change Description |
+|------|--------------------|
+| `src/[path]/file.ts` | [What changes and why] |
 
 ## Risk Assessment
-- **What could break:** [List affected subsystems, client-server sync issues]
-- **Balance impact:** [How does this affect game balance?]
-- **Performance impact:** [TPS impact, bandwidth, memory]
+- **What could break:** [List affected subsystems]
 - **Rollback plan:** [How to undo]
+- **Dependencies:** [External services, other teams]
 
 ## Testing Strategy (MANDATORY — must be comprehensive)
-
-### Definition Validation
-| Definition | Test Case | Expected Result |
-|------------|-----------|-----------------|
-| [NewItem] | `bun validateDefinitions` | Passes validation |
 
 ### Unit Tests
 For each function/component, define specific test cases:
@@ -600,22 +500,29 @@ For each function/component, define specific test cases:
 |----------|-----------|-------|------|------|-------|
 | `functionA` | happy path | [setup] | [action] | [result] | [deps] |
 | `functionA` | edge case | [setup] | [action] | [result] | [deps] |
+| `functionA` | error | [setup] | [action] | [error] | [deps] |
 
-### Integration Tests (Client-Server)
-| Scenario | Client Action | Server Response | Expected Outcome |
-|----------|---------------|-----------------|------------------|
-| [happy path] | [InputPacket] | [UpdatePacket] | [state change] |
-| [edge case] | [InputPacket] | [validation] | [error handled] |
+### Integration Tests
+API endpoint or service layer tests with real dependencies:
+| Scenario | Method | Input | Expected Output | Status Code |
+|----------|--------|-------|----------------|-------------|
+| [happy path] | POST /api/x | {...} | {...} | 200 |
+| [error case] | POST /api/x | {...} | {...} | 400 |
 
-### Manual Playtesting
-| Scenario | Steps | Expected Outcome |
-|----------|-------|-----------------|
-| [gameplay test] | 1. Join game 2. ... | [observable result] |
+### E2E Tests (if applicable)
+User flow scenarios from start to finish:
+| User Journey | Steps | Expected Outcome |
+|-------------|-------|-----------------|
+| [happy path] | 1. ... 2. ... 3. ... | [result] |
+| [error flow] | 1. ... 2. ... | [error handled] |
 
 ### Coverage Target
-- Definition validation: Pass
-- Critical game logic: 100%
-- Edge cases: Covered
+- Minimum: [X]% (e.g., 80%)
+- Critical paths: 100%
+
+### Test Data
+- Fixtures: [describe test data needed]
+- Mocks: [list external dependencies to mock]
 
 ## Related Documentation (MANDATORY)
 - **Tier 1:** [Link to architecture/data model docs]
@@ -830,7 +737,7 @@ Check request/response formats match spec.
 
 a. **Input Validation:**
 - All user inputs validated?
-- SQL injection vulnerabilities (raw queries, string concatenation)?
+- Binary packet size limits and malformed-input handling (`SuroiByteStream`)?
 - XSS vulnerabilities (innerHTML, dangerouslySetInnerHTML, eval)?
 
 b. **Authentication & Authorization:**
@@ -871,12 +778,12 @@ d. **Scalability:**
 
 **6. Performance Audit:**
 
-- Database query efficiency
-- API response times
-- Caching opportunities
-- Bundle sizes (frontend)
-- Unnecessary re-renders or watchers
-- Asset optimization
+- Spatial grid query efficiency (broad-phase culling in `server/src/utils/grid.ts`)
+- Game tick budget (40 TPS = 25 ms per tick; per-tick object iteration cost)
+- WebSocket frame size (`UpdatePacket` serialization, `partialDirtyObjects` vs `fullDirtyObjects`)
+- Bundle sizes (Vite spritesheet packing: 4096×4096 high-res / 2048×2048 low-res)
+- Unnecessary PixiJS re-renders or missed dirty-flag resets
+- Asset optimization (spritesheet packing, audio spritesheet)
 
 ### Output Format
 
@@ -1013,107 +920,65 @@ For every user request:
 Register CLI tools, define sub-agents, and configure verification hooks.
 This section makes custom tools **discoverable and usable** by AI agents.
 
-## Suroi Development Commands
+## Custom Skills
 
-These are the built-in commands available in this repository. Use these
-for development, testing, and validation tasks.
+Each skill is documented in `.agents/skills/<name>/SKILL.md` following the
+[OpenAI Codex skills convention](https://developers.openai.com/codex/skills/).
+Each SKILL.md has YAML frontmatter with `name` and `description` (trigger
+conditions), followed by command, options, requirements, and examples.
 
-### Command Reference
+### Skill Inventory
 
-| Command | Description | When to Use |
-|---------|-------------|-------------|
-| `bun dev` | Start both client (port 3000) and server (port 8000) | Local development |
-| `bun dev:client` | Start client only | Client-only changes |
-| `bun dev:server` | Start server only | Server-only changes |
-| `bun build:client` | Production client build | Before deployment |
-| `bun start` | Start production server | Production |
-| `bun lint` | Lint with auto-fix (Biome) | Before committing |
-| `bun lint:check` | Lint check only (no fix) | CI validation |
-| `bun validateDefinitions` | Validate game definitions | After modifying definitions |
-| `bun validateSvgs` | Validate SVG assets | After adding/modifying SVGs |
-| `bun test` | Run workspace tests (e.g. `modeFromMap`, math) | After logic changes in `common`/shared code |
-| `bun watch:server` | TypeScript type checking in watch mode | During development |
-
-### Development Workflow
-
-1. **Before starting:** Copy `server/config.example.json` to `server/config.json`
-2. **Start development:** `bun dev`
-3. **After definition changes:** `bun validateDefinitions`
-4. **After SVG changes:** `bun validateSvgs`
-5. **Before committing:** `bun lint`
-
-### Protocol Version Management
-
-When modifying packets or serialization format:
-1. Increment `GameConstants.protocolVersion` in `common/src/constants.ts`
-2. Run `bun validateDefinitions` to verify
-3. Test client-server communication
+| Skill | Command | Description |
+|-------|---------|-------------|
+| [gemini](.agents/skills/gemini/SKILL.md) | `npm run gemini` | Text generation, vision, document analysis, grounded search via Gemini API |
+| [gemini-image](.agents/skills/gemini-image/SKILL.md) | `node tools/gemini-image-tool.js` | Image generation/editing with Gemini 2.0 or Imagen 3.0 |
+| [openai-image](.agents/skills/openai-image/SKILL.md) | `npm run openai-image` | Image generation/editing with GPT-image-1 or DALL-E 3 |
+| [image-optimizer](.agents/skills/image-optimizer/SKILL.md) | `npm run optimize-image` | Resize, convert format, adjust quality, AI background removal |
+| [remove-background](.agents/skills/remove-background/SKILL.md) | `npm run remove-background-advanced` | Local background removal with Sharp (no API key) |
+| [html-to-md](.agents/skills/html-to-md/SKILL.md) | `npm run html-to-md` | Scrape webpage to Markdown |
+| [download-file](.agents/skills/download-file/SKILL.md) | `npm run download-file` | Download files with progress tracking |
+| [generate-video](.agents/skills/generate-video/SKILL.md) | `npm run generate-video` | AI video generation via Replicate (Kling, MiniMax, etc.) |
+| [qwen3-tts](.agents/skills/qwen3-tts/SKILL.md) | `npm run qwen3-tts` | Text-to-speech with voice/clone/design modes |
+| [play-audio](.agents/skills/play-audio/SKILL.md) | `npm run play-audio` | Play audio files via system player |
+| [sprite-animator](.agents/skills/sprite-animator/SKILL.md) | `npm run sprite-animator` | Generate sprite animation frames for games |
+| [github-cli](.agents/skills/github-cli/SKILL.md) | `npm run github` | GitHub PRs, issues, releases, repos, workflows |
+| [data-indexing](.agents/skills/data-indexing/SKILL.md) | `npm run data-indexing` | Index documents into ChromaDB for semantic search |
+| [semantic-search](.agents/skills/semantic-search/SKILL.md) | `npm run semantic-search` | Vector search over ChromaDB-indexed documents |
+| [google-search](.agents/skills/google-search/SKILL.md) | `npm run google-search` | Real-time Google Search via Gemini grounding |
+| [datetime](.agents/skills/datetime/SKILL.md) | `npm run datetime` | Current date/time in various formats and timezones |
 
 ---
 
 ## Sub-Agent Definitions
 
-Define specialized agents with non-overlapping responsibilities for Suroi development.
+Define specialized agents with non-overlapping responsibilities.
 
-### Definition Agent
-**Role:** Add or modify game object definitions in `common/src/definitions/`
-**Commands:** `bun validateDefinitions`
+### Agent Template
 
-**Process:**
-1. Read existing definition patterns in the target file
-2. Add/modify definition following `ObjectDefinitions` pattern
-3. Run `bun validateDefinitions` to verify
-4. If protocol change needed, bump `GameConstants.protocolVersion`
-
-**Can:** Create/edit definition files, update constants
-**Cannot:** Modify server logic, client rendering, packet serialization
-
-**Output Format:** Definition code + validation result
-
----
-
-### Packet Agent
-**Role:** Add or modify network packets in `common/src/packets/`
-**Commands:** `bun lint`, `bun dev`
+```markdown
+### [Agent Name]
+**Role:** [1 sentence — what this agent does]
+**Skills:** [List of registered skills this agent can use]
 
 **Process:**
-1. Read existing packet patterns (InputPacket, UpdatePacket, etc.)
-2. Add/modify packet following `Packet<DataIn, DataOut>` pattern
-3. Update `PacketStream` and `Packets` array
-4. Bump `GameConstants.protocolVersion`
-5. Update server and client to handle new packet
+1. [Step]
+2. [Step]
+3. [Step]
 
-**Can:** Create/edit packet files, update protocol version
-**Cannot:** Modify game logic unrelated to network communication
+**Can:** [Permitted actions]
+**Cannot:** [Forbidden actions — prevents overlap with other agents]
 
-**Output Format:** Packet code + protocol version update
-
----
-
-### Object Agent
-**Role:** Implement game objects across common/server/client
-**Commands:** `bun dev`, `bun lint`
-
-**Process:**
-1. Add definition in `common/src/definitions/`
-2. Add serialization in `common/src/utils/objectsSerializations.ts`
-3. Implement server object in `server/src/objects/`
-4. Implement client object in `client/src/scripts/objects/`
-5. Test with `bun dev`
-
-**Can:** Create/edit object implementations across all packages
-**Cannot:** Modify unrelated systems (UI, translations, etc.)
-
-**Output Format:** Implementation across common/server/client + test results
-
----
+**Output Format:**
+[Define structured output this agent produces]
+```
 
 ### Principles
 - **Single Responsibility:** Each agent has ONE job, no overlap
-- **Cross-Package Awareness:** Most changes touch multiple packages
-- **Protocol Discipline:** Always consider protocol version implications
-- **Validation First:** Run `bun validateDefinitions` after definition changes
-- **Test in Dev:** Always verify changes with `bun dev`
+- **Skills Bridge:** Agents use registered skills (above) to invoke tools
+- **Constraints Prevent Drift:** "Cannot" is as important as "Can"
+- **Structured Output:** Every agent produces a defined format
+- **Chain Results:** Each agent's output feeds the next agent's input
 
 ---
 
@@ -1163,42 +1028,3 @@ Hooks are quality gates that run at defined points in the pipeline.
 **Solution:** [How to fix]
 **Prevention:** [How to avoid in future]
 ```
-
----
-
-### Protocol version mismatch
-**Context:** After modifying packets or serialization
-**Symptom:** Client can't connect, deserialization errors, "Invalid packet" messages
-**Root cause:** Client and server have different `GameConstants.protocolVersion`
-**Solution:** Increment `GameConstants.protocolVersion` in `common/src/constants.ts`, rebuild both client and server
-**Prevention:** Always bump protocol version when changing packet format or serialization
-
----
-
-### Definition validation failure
-**Context:** After adding/modifying definitions in `common/src/definitions/`
-**Symptom:** `bun validateDefinitions` fails with validation errors
-**Root cause:** Definition doesn't match expected schema, missing required fields, invalid references
-**Solution:** Read validation error, check similar definitions for correct patterns, fix the definition
-**Prevention:** Copy existing definition patterns, run validation after every change
-
----
-
-### Object not rendering
-**Context:** After adding a new game object
-**Symptom:** Object exists on server (visible in debug) but not rendered on client
-**Root cause:** Missing client implementation, missing sprite, serialization mismatch
-**Solution:** 
-1. Check `client/src/scripts/objects/` for client implementation
-2. Check sprite exists in `client/public/img/game/`
-3. Verify serialization in `common/src/utils/objectsSerializations.ts`
-**Prevention:** Implement objects across all three packages (common → server → client)
-
----
-
-### Import alias not resolving
-**Context:** Using `@common/*` imports
-**Symptom:** Module not found errors for `@common/*` paths
-**Root cause:** Running from wrong directory, missing tsconfig path mapping
-**Solution:** Run commands from workspace root, verify `tsconfig.json` has correct `paths` configuration
-**Prevention:** Always run from workspace root, use consistent import patterns
