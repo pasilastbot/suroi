@@ -1,0 +1,62 @@
+{
+  "packet_id": "VERIFY-SUROI-BASELINE-2026-10-06",
+  "revision": 4,
+  "created_at": "2026-10-06T08:58:43Z",
+  "execution_runs": [
+    {
+      "command": "bun validateDefinitions",
+      "outcome": "PASS"
+    },
+    {
+      "command": "bun validateSvgs",
+      "outcome": "PASS"
+    },
+    {
+      "command": "bun test tests/src",
+      "outcome": "PASS",
+      "tests_passed": 149,
+      "tests_skipped": 1,
+      "files": 18
+    }
+  ],
+  "lower_evidence_summary": {
+    "sr_tagged_count": 42,
+    "sr_total": 64,
+    "sr_without_tag_count": 21
+  },
+  "upper_evidence_summary": {
+    "ur_runtime_proof": 0,
+    "harness_offline_join": true
+  },
+  "gaps": {
+    "sr_without_named_test": [
+      "SR-BAL-002",
+      "SR-CHAR-004",
+      "SR-CHAR-005",
+      "SR-CLI-001",
+      "SR-CLI-002",
+      "SR-CLI-003",
+      "SR-CON-001",
+      "SR-GAS-002",
+      "SR-INP-002",
+      "SR-LOOP-002",
+      "SR-MP-002",
+      "SR-OBJ-005",
+      "SR-PLG-002",
+      "SR-REN-001",
+      "SR-REN-002",
+      "SR-REN-003",
+      "SR-TST-001",
+      "SR-TST-002",
+      "SR-TST-003",
+      "SR-TST-005",
+      "SR-UI-002"
+    ],
+    "sr_without_named_test_truncated": false
+  },
+  "eligibility": {
+    "full_baseline_accept": false,
+    "sr_tag_coverage_pct": 65.6
+  },
+  "proof_digest": "c3bccebfb4ea1dc84c0dd0aaa313667476ead4e7e6a2b8b3664a4a18eb96ec8b"
+}

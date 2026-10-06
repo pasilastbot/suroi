@@ -1,0 +1,180 @@
+{
+  "run_key": "SUROI-ONBOARD-2026-10-06",
+  "mode": "baseline",
+  "authorized_by": "USER:2026-10-06:file-backed-ledger-and-reverse-engineer-baseline",
+  "scope_extended_by": "USER:2026-10-06:full-codebase-reverse-engineer-sweep",
+  "repositories": [
+    {
+      "key": "suroi",
+      "root": "/Users/pasivuorio/training/suroi",
+      "vcs": "git",
+      "revision": "5f67ec7f8abd6ee84c39ad739f1f406d9f23e0dc",
+      "dirty": true,
+      "dirty_note": "Working tree includes character-selection and file-state ledger files"
+    }
+  ],
+  "scope": {
+    "behavior": "Full monorepo as-built baseline: all Tier-2 subsystems in docs/content-plan.md (definitions, packets, objects, game-loop, inventory, map, gas, plugins, client, rendering, input, ui, console, testing, multiplayer, ballistics, modes) plus prior CORE and CHAR groups.",
+    "source_roots": ["common/", "server/", "client/", "tests/", "docs/"],
+    "excluded": [
+      "node_modules/",
+      "client/dist/",
+      ".git/",
+      "credentials and server/config.json secrets",
+      "agent/process tooling under .modernpath/ (templates only, not product)"
+    ]
+  },
+  "inventory_summary": {
+    "typescript_files_under_scope": 276,
+    "subsystem_readmes": 15,
+    "docs_tier1_tier2_index": "docs/content-plan.md"
+  },
+  "group_receipts": [
+    {
+      "group_key": "GRP-CORE-001",
+      "published_at": "2026-10-06T08:45:00Z",
+      "requirement_ids": ["UR-CORE-001", "SR-CORE-001", "SR-CORE-002", "SR-CORE-003", "SR-CORE-004"]
+    },
+    {
+      "group_key": "GRP-CHAR-001",
+      "published_at": "2026-10-06T08:45:00Z",
+      "requirement_ids": [
+        "UR-CHAR-001",
+        "SR-CHAR-001",
+        "SR-CHAR-002",
+        "SR-CHAR-003",
+        "SR-CHAR-004",
+        "SR-CHAR-005",
+        "SR-CHAR-006"
+      ]
+    },
+    {
+      "group_key": "GRP-DEF-001",
+      "published_at": "2026-10-06T09:30:00Z",
+      "requirement_ids": ["UR-DEF-001", "SR-DEF-001", "SR-DEF-002", "SR-DEF-003"]
+    },
+    {
+      "group_key": "GRP-PKT-001",
+      "published_at": "2026-10-06T09:30:00Z",
+      "requirement_ids": ["UR-PKT-001", "SR-PKT-001", "SR-PKT-002", "SR-PKT-003"]
+    },
+    {
+      "group_key": "GRP-OBJ-001",
+      "published_at": "2026-10-06T09:30:00Z",
+      "requirement_ids": ["UR-OBJ-001", "SR-OBJ-001", "SR-OBJ-002", "SR-OBJ-003", "SR-OBJ-004"]
+    },
+    {
+      "group_key": "GRP-LOOP-001",
+      "published_at": "2026-10-06T09:30:00Z",
+      "requirement_ids": ["UR-LOOP-001", "SR-LOOP-001", "SR-LOOP-002", "SR-LOOP-003", "SR-LOOP-004"]
+    },
+    {
+      "group_key": "GRP-INV-001",
+      "published_at": "2026-10-06T09:30:00Z",
+      "requirement_ids": ["UR-INV-001", "SR-INV-001", "SR-INV-002", "SR-INV-003"]
+    },
+    {
+      "group_key": "GRP-MAP-001",
+      "published_at": "2026-10-06T09:30:00Z",
+      "requirement_ids": ["UR-MAP-001", "SR-MAP-001", "SR-MAP-002", "SR-MAP-003"]
+    },
+    {
+      "group_key": "GRP-GAS-001",
+      "published_at": "2026-10-06T09:30:00Z",
+      "requirement_ids": ["UR-GAS-001", "SR-GAS-001", "SR-GAS-002"]
+    },
+    {
+      "group_key": "GRP-PLG-001",
+      "published_at": "2026-10-06T09:30:00Z",
+      "requirement_ids": ["UR-PLG-001", "SR-PLG-001", "SR-PLG-002"]
+    },
+    {
+      "group_key": "GRP-MP-001",
+      "published_at": "2026-10-06T09:30:00Z",
+      "requirement_ids": ["UR-MP-001", "SR-MP-001", "SR-MP-002", "SR-MP-003"]
+    },
+    {
+      "group_key": "GRP-CLI-001",
+      "published_at": "2026-10-06T09:30:00Z",
+      "requirement_ids": ["UR-CLI-001", "SR-CLI-001", "SR-CLI-002"]
+    },
+    {
+      "group_key": "GRP-REN-001",
+      "published_at": "2026-10-06T09:30:00Z",
+      "requirement_ids": ["UR-REN-001", "SR-REN-001", "SR-REN-002", "SR-REN-003"]
+    },
+    {
+      "group_key": "GRP-INP-001",
+      "published_at": "2026-10-06T09:30:00Z",
+      "requirement_ids": ["UR-INP-001", "SR-INP-001", "SR-INP-002"]
+    },
+    {
+      "group_key": "GRP-UI-001",
+      "published_at": "2026-10-06T09:30:00Z",
+      "requirement_ids": ["UR-UI-001", "SR-UI-001", "SR-UI-002", "SR-UI-003"]
+    },
+    {
+      "group_key": "GRP-CON-001",
+      "published_at": "2026-10-06T09:30:00Z",
+      "requirement_ids": ["UR-CON-001", "SR-CON-001", "SR-CON-002"]
+    },
+    {
+      "group_key": "GRP-TST-001",
+      "published_at": "2026-10-06T09:30:00Z",
+      "requirement_ids": ["UR-TST-001", "SR-TST-001", "SR-TST-002", "SR-TST-003", "SR-TST-004"]
+    },
+    {
+      "group_key": "GRP-BAL-001",
+      "published_at": "2026-10-06T09:30:00Z",
+      "requirement_ids": ["UR-BAL-001", "SR-BAL-001", "SR-BAL-002"]
+    },
+    {
+      "group_key": "GRP-MOD-001",
+      "published_at": "2026-10-06T09:30:00Z",
+      "requirement_ids": ["UR-MOD-001", "SR-MOD-001"]
+    },
+    {
+      "group_key": "GRP-COV-001",
+      "published_at": "2026-10-06T10:00:00Z",
+      "requirement_ids": ["SR-REN-004"]
+    },
+    {
+      "group_key": "GRP-COV-002",
+      "published_at": "2026-10-06T10:00:00Z",
+      "requirement_ids": ["SR-DEF-004"]
+    },
+    {
+      "group_key": "GRP-COV-003",
+      "published_at": "2026-10-06T10:00:00Z",
+      "requirement_ids": ["SR-PKT-004"]
+    },
+    {
+      "group_key": "GRP-COV-004",
+      "published_at": "2026-10-06T10:00:00Z",
+      "requirement_ids": ["SR-UTL-001"]
+    },
+    {
+      "group_key": "GRP-COV-005",
+      "published_at": "2026-10-06T10:00:00Z",
+      "requirement_ids": ["SR-OBJ-005"]
+    },
+    {
+      "group_key": "GRP-COV-006",
+      "published_at": "2026-10-06T10:00:00Z",
+      "requirement_ids": ["SR-CLI-003"]
+    },
+    {
+      "group_key": "GRP-COV-007",
+      "published_at": "2026-10-06T10:00:00Z",
+      "requirement_ids": ["SR-PLG-003"]
+    },
+    {
+      "group_key": "GRP-COV-008",
+      "published_at": "2026-10-06T10:00:00Z",
+      "requirement_ids": ["SR-TST-005"]
+    }
+  ],
+  "coverage_measurement": "file-state/coverage/SUROI-ONBOARD-source-disposition.json",
+  "verification_packet": "file-state/verify/VERIFY-SUROI-BASELINE-2026-10-06.json",
+  "verification_trace_gate": "GATE-VERIFY-TRACE-001"
+}

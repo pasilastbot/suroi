@@ -1,0 +1,23 @@
+{
+  "measurement": "source_disposition",
+  "authority": "file-state/REQUIREMENTS.md",
+  "run_key": "SUROI-ONBOARD-2026-10-06",
+  "timestamp": "2026-10-06T08:45:30Z",
+  "repository": "suroi",
+  "denominator_eligible_ts_files": 150,
+  "numerator_cited_distinct": 150,
+  "percent_covered": 100.0,
+  "target_percent": 60,
+  "target_met": true,
+  "excluded_with_reason": {
+    "pattern": "client/vite/**, client/editor/**, client/news/**, vite-env.d.ts",
+    "reason": "Build tooling and auxiliary Vite entrypoints, not runtime game simulation",
+    "count": 12
+  },
+  "uncovered_eligible": [],
+  "uncited_paths_in_ledger": [
+    "client/index.html",
+    "client/vite/plugins/translations-plugin.ts",
+    "server/src/plugins/"
+  ]
+}

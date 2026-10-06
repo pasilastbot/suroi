@@ -1,0 +1,12 @@
+# Baseline verify evidence log
+
+## Revision 3 — 2026-10-06
+Git: 5f67ec7f8abd6ee84c39ad739f1f406d9f23e0dc (dirty)
+
+$ bun validateDefinitions → PASS
+$ bun validateSvgs → PASS
+$ bun test tests/src → 131 pass, 0 fail, 14 files
+
+New modules since rev 2: packets-extended.test.ts, core-and-join.test.ts, def-obj-bal.test.ts
+
+SR IDs referenced in tests: 30 / 64
